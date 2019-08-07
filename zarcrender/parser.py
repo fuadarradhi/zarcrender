@@ -1,9 +1,10 @@
 from .constant import keys, grid
+from .helper import cleanstr
 
 
 def parse_querystring(key, configs):
     if keys.QUERYDICT:
-        return configs.request.get(key, '').strip()
+        return cleanstr(configs.request.get(key, '').strip())
     else:
         pass
         # TODO:
@@ -26,18 +27,18 @@ def parse_column(index, configs, columns, params):
 
             columns['filter'][_f] = {
                 'fields': _s,
-                'search': configs.request.get('search[value]'.format(index), '').strip(),
-                'column': configs.request.get('columns[{}][search][value]'.format(index), '').strip()
+                'search': cleanstr(configs.request.get('search[value]'.format(index), '').strip()),
+                'column': cleanstr(configs.request.get('columns[{}][search][value]'.format(index), '').strip())
             }
 
             _index = 0
             while _o:
-                _order_index = configs.request.get('order[{}][column]'.format(_index), None)
+                _order_index = cleanstr(configs.request.get('order[{}][column]'.format(_index), None))
                 if not _order_index:
                     break
 
                 if int(_order_index) == index:
-                    columns['orders'][_f] = configs.request.get('order[{}][dir]'.format(_index), None).upper()
+                    columns['orders'][_f] = cleanstr(configs.request.get('order[{}][dir]'.format(_index), None).upper())
                     break
                 _index += 1
 
@@ -55,8 +56,8 @@ def parse_column(index, configs, columns, params):
 def parse_limit(configs):
     if configs.grid == grid.DATATABLES:
         if configs.keys == keys.QUERYDICT:
-            _offset = int(configs.request.get('start', 0))
-            _limit = int(configs.request.get('length', 10))
+            _offset = int(cleanstr(configs.request.get('start', 0)))
+            _limit = int(cleanstr(configs.request.get('length', 10)))
         else:
             pass
             # TODO:

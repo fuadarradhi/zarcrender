@@ -1,3 +1,6 @@
+import re
+
+
 class obj(object):
     def __init__(self, d):
         self.d = d
@@ -9,3 +12,12 @@ class obj(object):
 
     def __repr__(self):
         return str(self.d)
+
+
+def cleanstr(text):
+    if not isinstance(text, str):
+        return text
+
+    text = re.sub(r"(<.*?>)", '', text, 0, re.MULTILINE)
+    text = re.sub(r"([^\w\s.-])", '', text, 0, re.MULTILINE)
+    return text

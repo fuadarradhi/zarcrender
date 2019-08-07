@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="zarcrender",
-    version="1.0.0",
+    version="1.0.1",
     author="Fuad Ar-Radhi",
     author_email="fuad.arradhi@gmail.com",
     description="Python JSON serverside render for any JS datagrid library",
